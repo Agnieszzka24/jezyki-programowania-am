@@ -19,6 +19,10 @@ def dzielniki_wlasciwe(n):
 # print(dzielniki_wlasciwe(12))
 
 def zaprzyjazniona(start, end):
+    if start > end:
+            start, end = end, start
+
+
     znalezione_pary = set()
 
     for a in range(start, end + 1):
@@ -36,6 +40,7 @@ def zaprzyjazniona(start, end):
 
 
 
-zaprzyjazniona(220, 284)  # 220 i 284
-zaprzyjazniona(200, 300)  # 220 i 284
-zaprzyjazniona(234, 222)  # blad
+zaprzyjazniona(220, 284)
+zaprzyjazniona(284,220)
+zaprzyjazniona(200, 300)
+zaprzyjazniona(234, 222)
