@@ -60,6 +60,7 @@ class TestGenerateBoard(unittest.TestCase):
             result = self.board.chess_notation(x, y)
             self.assertEqual(result, expected , f"Dla ({x}, {y}) oczekiwano {expected}, a otrzymano {result}")
 
+
 if __name__ == '__main__':
     unittest.main()
 
