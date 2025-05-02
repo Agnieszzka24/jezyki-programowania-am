@@ -1,5 +1,7 @@
 from generate_board import GenerateBoard
 from chess_logic import ChessLogic
+from display_board import DisplayBoard
+
 import random
 
 
@@ -25,6 +27,7 @@ def check_if_queens_threaten_pawn(board):
 if __name__ == "__main__":
     # Wyświelenie planszy
     board = GenerateBoard()
+    display_board = DisplayBoard()
 
     queens_number = get_random_queens_number()
 
@@ -32,7 +35,7 @@ if __name__ == "__main__":
     board.add_random_pawn()
 
     print("\n Plansza")
-    board.display_board()
+    display_board.display_board(board.board, board.queens, board.pawn_positions)
 
     print("\n Pozycje hetmanów:", [board.chess_notation(x,y) for x, y in board.queens])
     print(" Pozycja pionka:", board.chess_notation(*board.pawn_positions))

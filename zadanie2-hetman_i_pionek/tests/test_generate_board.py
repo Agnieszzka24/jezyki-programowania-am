@@ -20,12 +20,12 @@ class TestGenerateBoard(unittest.TestCase):
         for row in self.board.board:
             self.assertTrue(all(cell == ' ' for cell in row))
 
-    def test_display_output(self):
-        """Sprawdzenie, czy plansza jest wyświetlana poprawnie"""
-        try:
-            self.board.display_board()
-        except Exception as e:
-            self.fail(f"display_board() zgłosiło błąd: {e}")
+    # def test_display_output(self):
+    #     """Sprawdzenie, czy plansza jest wyświetlana poprawnie"""
+    #     try:
+    #         self.board.display_board()
+    #     except Exception as e:
+    #         self.fail(f"display_board() zgłosiło błąd: {e}")
 
     def test_add_queen(self):
         """Sprawdzenie, czy mamy 3 hetmany na planszy"""
