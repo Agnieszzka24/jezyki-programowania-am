@@ -19,9 +19,9 @@ class TestDisplayBoard(unittest.TestCase):
     def test_get_attacked_positions(self):
         """Sprawdzenie, czy atakowane pozycje są poprawnie obliczane"""
         attacked = self.displayer.get_attacked_positions(self.queens, 8)
-        self.assertIn((0, 7), attacked)  # powinno być atakowane przez (0,0)
-        self.assertIn((7, 0), attacked)  # powinno być atakowane przez (0,0)
-        self.assertIn((5, 5), attacked)  # powinno być atakowane przez (3,3)
+        self.assertIn((0, 7), attacked)
+        self.assertIn((7, 0), attacked)
+        self.assertIn((5, 5), attacked)  
 
     def test_display_without_attacks(self):
         """Test wyświetlania bez pokazywania atakowanych pól"""

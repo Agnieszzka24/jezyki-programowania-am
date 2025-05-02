@@ -1,6 +1,7 @@
 from generate_board import GenerateBoard
 from chess_logic import ChessLogic
 from display_board import DisplayBoard
+from game_controller import GameController
 
 import random
 
@@ -28,6 +29,8 @@ if __name__ == "__main__":
     # Wyświelenie planszy
     board = GenerateBoard()
     display_board = DisplayBoard()
+    game = GameController()
+
 
     queens_number = get_random_queens_number()
 
@@ -41,3 +44,5 @@ if __name__ == "__main__":
     print(" Pozycja pionka:", board.chess_notation(*board.pawn_positions))
 
     check_if_queens_threaten_pawn(board)
+
+    game.run()

@@ -47,29 +47,3 @@ class GenerateBoard:
         column = chr(97 + y)
         row = str(self.size - x)
         return f"{column}{row}"
-
-
-
-    # def display_board(self):
-    #     """Wyświetla planszę w formacie tekstowym"""
-    #     GREEN = '\033[92m'
-    #     RED = '\033[91m'
-    #     RESET = '\033[0m'
-    #
-    #     header = "╤ " + " ".join([chr(97 + i) for i in range(self.size)]) + " ╤"
-    #     print(header)
-    #
-    #     for i, row in enumerate(self.board):
-    #         row_number = f"{self.size - i}"
-    #         cells = []
-    #         for cell in row:
-    #             if cell == 'Q':
-    #                 cells.append(f"{RED}Q{RESET}")
-    #             elif cell == 'P':
-    #                 cells.append(f"{GREEN}P{RESET}")
-    #             else:
-    #                 cells.append(f"░")
-    #         print(f"{row_number} {' '.join(cells)} {self.size - i}")
-    #
-    #     footer = "╧ " + " ".join([chr(97 + i) for i in range(self.size)]) + " ╧"
-    #     print(footer)
