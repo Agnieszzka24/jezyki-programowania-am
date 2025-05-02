@@ -1,21 +1,21 @@
-# Pliki Pythona
+# IDE
+.idea/
+.vscode/
+
+# Python
 __pycache__/
 *.py[cod]
 *.so
 .Python
 
-# Środowiska wirtualne
-venv/
-.env/
-
-# Narzędzia testowe
+# Testowe/raporty
 .coverage
 htmlcov/
 .pytest_cache/
 
-# IDE
-.vscode/
-.idea/
+# Tymczasowe pliki
+*.tmp
+*.bak
 
 # Systemowe
 .DS_Store
