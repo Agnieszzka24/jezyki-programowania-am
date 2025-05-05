@@ -21,6 +21,6 @@ class TestDisplayBoard(unittest.TestCase):
     def test_display_output(self):
         """Czy wyświetlanie planszy działa bez błędów?"""
         try:
-            self.display.display_board(self.board, self.queens, self.pawn_pos)
+            self.display.display_board(self.board, self.queens, self.pawn_pos) # Wywołanie metody wyświetlającej planszę
         except Exception as e:
             self.fail(f"Wyświetlanie planszy zgłosiło błąd: {e}")

@@ -1,4 +1,6 @@
 class ChessLogic:
+    """Klasa ChessLogic zawiera metody do sprawdzania zagrożeń pionka przez hetmany na szachownicy."""
+
     @staticmethod
     def is_queen_threatening_pawn(queen_pos, pawn_pos):
         """Sprawdza czy hetman grozi pionkowi."""
@@ -13,7 +15,7 @@ class ChessLogic:
         if qx == px or qy == py:
             return True
 
-        # Ta sama przekątna
+        # Ta sama przekątna - różnica współrzędnych jest taka sama
         if abs(qx - px) == abs(qy - py):
             return True
 

@@ -1,12 +1,13 @@
 import random
 
 class GenerateBoard:
+    """Klasa do logiki generowania planszy z hetmanami i pionkiem"""
+
     def __init__(self, size=8):
-        # if size < 1:
-        #     raise ValueError("Size must be at least 1")
+        """Inicjalizuje planszę o rozmiarze 8x8"""
         self.size = size
         self.board = self.generate_empty_board()
-        self.queens = []  #przechowywanie pozycji hetmanów (x,y)
+        self.queens = []  #przechowywanie pozycji hetmanów (x,y) - krotka
         self.pawn_positions = None
 
 

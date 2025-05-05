@@ -49,7 +49,7 @@ class GameController:
         """Wyświetla aktualny stan planszy"""
         print("\n" + "=" * 40)
         print("AKTUALNA PLANSZA:")
-        self.display.display_board(self.board.board, self.board.queens, self.board.pawn_positions)
+        self.display.display_board(self.board.board, self.board.queens, self.board.pawn_positions) # wyświetlanie całej planszy
         print("\nPozycje hetmanów:", [self.board.chess_notation(x, y) for x, y in self.board.queens])
         print("Pozycja pionka:", self.board.chess_notation(*self.board.pawn_positions))
         ChessLogic.check_threats(self.board)
@@ -57,7 +57,7 @@ class GameController:
 
 
     def _get_user_choice(self):
-        """Pobiera i waliduje wybór użytkownika"""
+        """Pobiera i waliduje wyboru użytkownika"""
         while True:
             print("\nOpcje:")
             print("1. Wylosuj nową pozycję dla pionka")
