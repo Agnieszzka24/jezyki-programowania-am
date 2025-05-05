@@ -118,5 +118,3 @@ class GameController:
     def _exit_game(self):
         """Zamykanie gry z podsumowaniem"""
         print("\nDziękujemy za grę!")
-        print("Końcowy stan planszy:")
-        self._display_current_state()

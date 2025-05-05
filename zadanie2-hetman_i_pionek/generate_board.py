@@ -13,6 +13,15 @@ class GenerateBoard:
 
     def add_random_queen(self, k):
         """Dodaje k hetmanów na losowe pozycje"""
+        if k > 5:
+            raise ValueError("Maksymalna liczba hetmanów to 5!")
+
+        positions = set()
+        positions.update(self.queens)
+
+        if self.pawn_positions:
+            positions.add(self.pawn_positions)
+
         for _ in range(k):
             while True:
                 x = random.randint(0, self.size - 1)
