@@ -15,26 +15,26 @@ class DisplayBoard:
         for qx ,qy in queens:
             # poziomo i pionowo
             for i in range(size):
-                attacked_positions.add((qx, i))
-                attacked_positions.add((i, qy))
+                attacked_positions.add((qx, i)) # cały wiersz
+                attacked_positions.add((i, qy)) # cała kolumna
 
             # przekątne
             for i in range(1, size):
-                for dx, dy in [(1,1), (1,-1), (-1,1), (-1,-1)]:
+                for dx, dy in [(1,1), (1,-1), (-1,1), (-1,-1)]:  # różne kierunki przekątnych
                     x, y = qx + i * dx, qy + i * dy # oblicza pozycje na przekątnej
-                    if 0 <= x < size and 0 <= y < size:
+                    if 0 <= x < size and 0 <= y < size: # granica planszy
                         attacked_positions.add((x, y))
         return attacked_positions
 
     def display_board(self, board, queens, pawn_pos, show_attacked=True):
         """Wyświetla planszę"""
-        attacked = self.get_attacked_positions(queens, self.size) if show_attacked else set()
+        attacked = self.get_attacked_positions(queens, self.size) if show_attacked else set() # atakowane pozycje
 
         header = "╤ " + " ".join([chr(97 + i) for i in range(self.size)]) + " ╤"
         print(header)
 
         for i, row in enumerate(board):
-            row_number = f"{self.size - i}"
+            row_number = f"{self.size - i}" # 8-1
             cells = []
             for j, cell in enumerate(row):
                 if (i, j) == pawn_pos:
