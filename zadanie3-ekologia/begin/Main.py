@@ -6,6 +6,7 @@ import os
 
 
 if __name__ == '__main__':
+	'''Główna funkcja programu, która tworzy świat i organizmy, a następnie symuluje ich interakcje'''
 	pyWorld = World(10, 10)
 
 	newOrg = Grass(position=Position(xPosition=9, yPosition=9), world=pyWorld)
@@ -20,6 +21,7 @@ if __name__ == '__main__':
 	print(pyWorld)
 
 	for _ in range(0, 50):
+		"""Pętla symulująca tury, w której organizmy wykonują swoje ruchy i akcje."""
 		input('')
 		os.system('cls')
 		pyWorld.makeTurn()

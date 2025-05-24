@@ -5,8 +5,10 @@ from ActionEnum import ActionEnum
 
 
 class World(object):
+	'''Klasa reprezentująca świat, w którym żyją organizmy'''
 
 	def __init__(self, worldX, worldY):
+		'''Inicjalizuje świat o podanych wymiarach'''
 		self.__worldX = worldX
 		self.__worldY = worldY
 		self.__turn = 0
@@ -16,41 +18,51 @@ class World(object):
 
 	@property
 	def worldX(self):
+		'''Zwraca szerokość świata'''
 		return self.__worldX
 
 	@property
 	def worldY(self):
+		'''Zwraca wysokość świata'''
 		return self.__worldY
 
 	@property
 	def turn(self):
+		'''Zwraca aktualną turę świata'''
 		return self.__turn
 
 	@turn.setter
 	def turn(self, value):
+		'''Ustawia aktualną turę świata'''
 		self.__turn = value
 
 	@property
 	def organisms(self):
+		'''Zwraca listę organizmów w świecie'''
 		return self.__organisms
 
 	@organisms.setter
 	def organisms(self, value):
+		'''Ustawia listę organizmów w świecie'''
 		self.__organisms = value
 
 	@property
 	def newOrganisms(self):
+		'''Zwraca listę nowych organizmów, które mają zostać dodane do świata'''
 		return self.__newOrganisms
 
 	@newOrganisms.setter
 	def newOrganisms(self, value):
+		'''Ustawia listę nowych organizmów, które mają zostać dodane do świata'''
 		self.__newOrganisms = value
 
 	@property
 	def separator(self):
+		'''Zwraca separator używany do reprezentacji pustych pól na planszy'''
 		return self.__separator
 
 	def makeTurn(self):
+		'''Wykonuje jedną turę w świecie, aktualizując pozycje i akcje organizmów'''
 		actions = []
 
 		for org in self.organisms:
@@ -81,6 +93,7 @@ class World(object):
 		self.turn += 1
 
 	def makeMove(self, action):
+		'''Wykonuje ruch organizmu na podstawie akcji'''
 		print(action)
 		if action.action == ActionEnum.A_ADD:
 			self.newOrganisms.append(action.organism)
@@ -92,6 +105,7 @@ class World(object):
 			action.organism.position = Position(xPosition=-1, yPosition=-1)
 
 	def addOrganism(self, newOrganism):
+		'''Dodaje nowego organizm do świata, jeśli jego pozycja jest poprawna'''
 		newOrgPosition = Position(xPosition=newOrganism.position.x, yPosition=newOrganism.position.y)
 
 		if self.positionOnBoard(newOrgPosition):
@@ -101,9 +115,11 @@ class World(object):
 		return False
 
 	def positionOnBoard(self, position):
+		'''Sprawdza, czy dana pozycja znajduje się na planszy'''
 		return position.x >= 0 and position.y >= 0 and position.x < self.worldX and position.y < self.worldY
 
 	def getOrganismFromPosition(self, position):
+		'''Zwraca organizm znajdujący się na danej pozycji, jeśli taki istnieje'''
 		pomOrganism = None
 
 		for org in self.organisms:
@@ -118,6 +134,7 @@ class World(object):
 		return pomOrganism
 
 	def getNeighboringPositions(self, position):
+		'''Zwraca listę sąsiadujących pozycji wokół danej pozycji'''
 		result = []
 		pomPosition = None
 
@@ -129,6 +146,7 @@ class World(object):
 		return result
 
 	def filterFreePositions(self, fields):
+		'''Zwraca listę wolnych pozycji z podanej listy, czyli takich, na których nie ma organizmów'''
 		result = []
 
 		for field in fields:
@@ -137,6 +155,7 @@ class World(object):
 		return result
 
 	def filterPositionsWithoutAnimals(self, fields):
+		'''Zwraca listę pozycji, na których nie ma zwierząt, czyli tylko rośliny lub puste pola'''
 		result = []
 		pomOrg = None
 
@@ -147,6 +166,7 @@ class World(object):
 		return result
 
 	def __str__(self):
+		'''Zwraca reprezentację tekstową świata, w tym organizmów i ich pozycji'''
 		result = '\nturn: ' + str(self.__turn) + '\n'
 		for wY in range(0, self.worldY):
 			for wX in range(0, self.worldX):
