@@ -18,7 +18,7 @@ class World(object):
         self.__turn = 0
         self.__organisms = []
         self.__newOrganisms = []
-        self.__separator = '.'
+        self.__separator = ' o '
         # Dodane pola dla funkcjonalności plagi
         self.__plague_active = False
         self.__plague_turns_remaining = 0
@@ -227,17 +227,30 @@ class World(object):
 
     def __str__(self):
         '''Zwraca reprezentację tekstową świata, w tym organizmów i ich pozycji'''
+        COLORS = {
+            'G': '\033[32m',
+            'S': '\033[97m',
+            'A': '\033[93m',
+            'R': '\033[91m',
+            'default': '\033[0m'
+        }
+
         result = f'\nturn: {self.__turn}'
         if self.__plague_active:
             result += f' (PLAGA aktywna przez {self.__plague_turns_remaining} tur)'
-        result += '\n'
+        result += '\n\n'
+
 
         for wY in range(0, self.worldY):
             for wX in range(0, self.worldX):
                 org = self.getOrganismFromPosition(Position(xPosition=wX, yPosition=wY))
                 if org:
-                    result += str(org.sign)
+                    color = COLORS.get(org.sign, COLORS['default'])
+                    result += f" {color}{org.sign}{COLORS['default']} "
                 else:
                     result += self.separator
-            result += '\n'
+            result += f"| {wY % 10}\n"
+
+        result += " " + '  '.join('-' for _ in range(self.worldX)) + '\n'
+        result += " "+'  '.join([str(i % 10) for i in range(self.worldX)]) + '\n'
         return result

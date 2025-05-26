@@ -2,90 +2,73 @@ from .Animal import Animal
 from Position import Position
 from Action import Action
 from ActionEnum import ActionEnum
-import random
 
 class Antelope(Animal):
     """Klasa reprezentująca Antylopę w ekosystemie"""
 
     def __init__(self, antelope=None, position=None, world=None):
+        """Inicjalizuje Antylopę, przyjmuje opcionalne parametry do klonowania lub ustawienia pozycji i świata"""
         super(Antelope, self).__init__(antelope, position, world)
 
     def clone(self):
+        """Zwraca nową instancję Antylopy - klonuje obecny obiekt (do rozmnażania)"""
         return Antelope(self, None, None)
 
     def initParams(self):
+        """Inicjalizuje parametry Antylopy"""
         self.power = 4
         self.initiative = 3
         self.liveLength = 11
         self.powerToReproduce = 5
         self.sign = 'A'
 
-    def escapeFromLynx(self):
-        """Specjalna metoda ucieczki przed rysiem"""
-        directions = [
-            Position(xPosition=0, yPosition=-2),  # góra
-            Position(xPosition=0, yPosition=2),  # dół
-            Position(xPosition=-2, yPosition=0),  # lewo
-            Position(xPosition=2, yPosition=0),  # prawo
-            Position(xPosition=-2, yPosition=-2),  # lewo-góra
-            Position(xPosition=2, yPosition=-2),  # prawo-góra
-            Position(xPosition=-2, yPosition=2),  # lewo-dół
-            Position(xPosition=2, yPosition=2)  # prawo-dół
-        ]
-
-        possible_escapes = []
-        for direction in directions:
-            new_pos = Position(
-                xPosition=self.position.x + direction.x,
-                yPosition=self.position.y + direction.y
-            )
-            if (self.world.positionOnBoard(new_pos) and
-                    self.world.getOrganismFromPosition(new_pos) is None):
-                possible_escapes.append(new_pos)
-
-        return random.choice(possible_escapes) if possible_escapes else None
-
     def move(self):
-        """Nadpisana metoda ruchu z uwzględnieniem ucieczki przed rysiem"""
-        # Najpierw sprawdź czy w pobliżu jest ryś
-        neighboring_positions = self.world.getNeighboringPositions(self.position)
-        lynx_nearby = any(
-            org for pos in neighboring_positions
-            if (org := self.world.getOrganismFromPosition(pos))
-            and org.__class__.__name__ == 'Lynx'
-        )
+        """Sprawdza, czy w pobliżu jest ryś, jaśli tak, to próbujemy uciec, jak nie, to wykonujemy normalny ruch"""
+        result = []
+        lynxPositions = self.getLynxPosition()
 
-        if lynx_nearby:
-            escape_pos = self.escapeFromLynx()
-            if escape_pos is not None:  # sprawdź, czy ucieczka jest możliwa
-                self.lastPosition = self.position
-                return [Action(
-                    action=ActionEnum.A_MOVE,
-                    position=escape_pos,
-                    value=0,
-                    organism=self
-                )]
-            # Jeśli ucieczka nie jest możliwa, wykonaj normalny ruch
+        if lynxPositions:
+            result.extend(self.tryEscape(lynxPositions))
+        else:
+            result = super().move()
 
-        # Normalny ruch zwierzęcia
-        pomPositions = self.getNeighboringPosition()
-        if pomPositions:
-            newPosition = random.choice(pomPositions)
+        return result
+
+    def tryEscape(self, lynxPositions):
+        """Próbuje uciec przed rysiem, jeśli jest w pobliżu i jest to możliwe"""
+        result = []
+        lynxPos = lynxPositions[0]  # bierzemy pierwszego napotkanego rysia
+        # Obliczamy kierunek wektora ucieczki: różnica między pozycją organizmu a pozycją rysia
+        dx = self.position.x - lynxPos.x
+        dy = self.position.y - lynxPos.y
+
+        # Uciekamy w przeciwnym kierunku (o 2 pola)
+        escapePos = Position(xPosition=self.position.x + 2 * dx,
+                           yPosition=self.position.y + 2 * dy)
+
+        # Sprawdzamy, czy pozycja jest w granicach planszy i czy jest wolna
+        if (self.world.positionOnBoard(escapePos) and
+            self.world.getOrganismFromPosition(escapePos) is None):
+            result.append(Action(ActionEnum.A_MOVE, escapePos, 0, self))
             self.lastPosition = self.position
-            result = [Action(ActionEnum.A_MOVE, newPosition, 0, self)]
-            metOrganism = self.world.getOrganismFromPosition(newPosition)
-            if metOrganism is not None:
-                result.extend(metOrganism.consequences(self))
-            return result
-        return []  # Brak możliwości ruchu
+        else:
+            # Jeśli ucieczka nie możliwa, atakujemy rysia
+            lynx = self.world.getOrganismFromPosition(lynxPos)
+            if lynx:
+                result.extend(lynx.consequences(self))
+        return result
 
-    def consequences(self, attackingOrganism):
-        """Specjalne zachowanie przy ataku"""
-        if attackingOrganism.__class__.__name__ == 'Lynx':
-            # 50% szans na ucieczkę przed rysiem
-            if random.random() < 0.5:
-                escape_pos = self.escapeFromLynx()
-                if escape_pos is not None:
-                    self.position = escape_pos
-                    return []  # udana ucieczka
-        return super().consequences(attackingOrganism)
+    def getNeighboringPosition(self):
+        """Zwraca listę sąsiednich pozycji Antylopy, które nie są zajęte przez inne zwierzęta"""
+        return self.world.filterPositionsWithoutAnimals(
+            self.world.getNeighboringPositions(self.position))
+
+    def getLynxPosition(self):
+        """Zwraca listę pozycji rysi sąsiadujących z Antylopą"""
+        neighboring = self.world.getNeighboringPositions(self.position)
+        lynxPositions = []
+        for pos in neighboring:
+            org = self.world.getOrganismFromPosition(pos)
+            if org and org.__class__.__name__ == 'Lynx':
+                lynxPositions.append(pos)
+        return lynxPositions

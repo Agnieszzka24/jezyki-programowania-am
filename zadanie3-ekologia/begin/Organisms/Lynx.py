@@ -9,7 +9,7 @@ class Lynx(Animal):
         super(Lynx, self).__init__(lynx, position, world)
 
     def clone(self):
-        '''Zwraca nową instancję rysia'''
+        '''Zwraca nową instancję rysia - klonuje obecny obiekt (do rozmnażania)'''
         return Lynx(self, None, None)
 
     def initParams(self):

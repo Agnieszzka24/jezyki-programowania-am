@@ -42,7 +42,7 @@ def add_organism_menu(world):
 if __name__ == '__main__':
     pyWorld = World(10, 10)
 
-    # Poprawione tworzenie pozycji - używając nazwanych argumentów
+    # tworzenie organizmów początkowych
     newOrg = Grass(position=Position(xPosition=9, yPosition=9), world=pyWorld)
     pyWorld.addOrganism(newOrg)
 
