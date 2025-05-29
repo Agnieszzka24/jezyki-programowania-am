@@ -21,8 +21,8 @@ class World(object):
         self.__separator = ' o '
         # Dodane pola dla funkcjonalności plagi
         self.__plague_active = False
-        self.__plague_turns_remaining = 0
-        self.__turns_since_last_plague = 0
+        self.__plague_turns_remaining = 0 #przez 2
+        self.__turns_since_last_plague = 0 #co 5
         # Lista dostępnych typów organizmów do dodania
         self.__available_organisms = {
             'G': Grass,
@@ -109,6 +109,8 @@ class World(object):
         else:
             self.__turns_since_last_plague += 1
 
+
+        # głowna logika tury
         actions = []
 
         for org in self.organisms:
