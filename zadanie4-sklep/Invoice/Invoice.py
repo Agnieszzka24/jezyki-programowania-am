@@ -3,6 +3,7 @@ from abc import ABC
 
 class Invoice(ABC):
     def __init__(self, number=None, customer=None, items=None):
+        """Inicjalizuje fakturę z numerem, klientem i listą pozycji"""
         self.__number = number
         self.__customer = customer
         self.__items = items
