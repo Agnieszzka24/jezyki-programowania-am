@@ -9,15 +9,18 @@ class Invoice(ABC):
         self.__items = items
 
     def __eq__(self, other):
+        """Porównuje faktury na podstawie numeru - definiuje równość faktur"""
         if isinstance(other, Invoice):
             return self.number == other.number
         else:
             return False
 
     def __hash__(self):
+        """Zwraca hash faktury na podstawie numeru - pozwala używać faktur w słownikach i zbiorach"""
         return hash(self.number)
 
     def __repr__(self):
+        """Zwraca reprezentację faktury - reprezentacja tekstowa obiektu"""
         return f"Invoice({self.number}, {self.customer}, {self.items})"
 
     @property
