@@ -7,7 +7,7 @@ from unittest.mock import patch, MagicMock
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'begin')))
 
-from Main import print_menu, add_organism_menu
+from Invoice.Main import print_menu, add_organism_menu
 from Position import Position
 
 

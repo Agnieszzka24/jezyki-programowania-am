@@ -1,7 +1,7 @@
 from abc import ABC
 
 
-class Invoice(ABC):
+class InvoiceObject(ABC):
     def __init__(self, number=None, customer=None, items=None):
         """Inicjalizuje fakturę z numerem, klientem i listą pozycji"""
         self.__number = number
@@ -10,7 +10,7 @@ class Invoice(ABC):
 
     def __eq__(self, other):
         """Porównuje faktury na podstawie numeru - definiuje równość faktur"""
-        if isinstance(other, Invoice):
+        if isinstance(other, InvoiceObject):
             return self.number == other.number
         else:
             return False

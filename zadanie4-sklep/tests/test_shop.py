@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import Mock
-from InvoiceRepository import InvoiceRepository
-from Shop import Shop
-from Invoice import Invoice
+from Invoice.Shop import Shop
+from Invoice.InvoiceRepository import InvoiceRepository
+from Invoice import InvoiceObject
 
 
 class ShopTests(unittest.TestCase):
@@ -18,13 +18,13 @@ class ShopTests(unittest.TestCase):
         stub_repository = Mock(InvoiceRepository)
         shop = Shop(stub_repository)
         stub_repository.find_by_number.return_value = None
-        result = shop.returning_goods(Mock(Invoice))
+        result = shop.returning_goods(Mock(InvoiceObject))
         self.assertEqual(result, False)
 
     def test_while_returning_goods_the_repository_delete_should_be_called_when_find(self):
         """Testuje, czy podczas zwrotu towarów, jeśli faktura istnieje, jest usuwana z repozytorium"""
         spy_repository = Mock(InvoiceRepository)
         shop = Shop(spy_repository)
-        spy_repository.find_by_number.return_value = Invoice()
-        shop.returning_goods(Mock(Invoice))
+        spy_repository.find_by_number.return_value = InvoiceObject()
+        shop.returning_goods(Mock(InvoiceObject))
         spy_repository.delete.assert_called_once()
