@@ -34,14 +34,14 @@ class Shop(ABC):
         if not self.__invoice_repository.find_by_number(invoice.number):
             return False
 
-        # Jeśli nie podano listy, zwróć wszystko z faktury
+        # Jeśli nie podano listy, zwróć wszystko z faktury - zwrot całościowy
         if items_to_return is None:
             items_to_return = invoice.items
 
-        # Przyjmij produkty z powrotem do magazynu
+        # Przyjmij produkty z powrotem do magazynu - zwrot częściowy
         for product_name, quantity in items_to_return:
             self.__warehouse.add_product(product_name, quantity,
-                                         self.__warehouse.get_product_info(product_name)["price"])
+            self.__warehouse.get_product_info(product_name)["price"])
 
         # Aktualizuj listę produktów na fakturze (tylko dla częściowego zwrotu)
         if items_to_return is not None and set(items_to_return) != set(invoice.items):

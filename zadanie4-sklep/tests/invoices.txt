@@ -1,0 +1,5 @@
+Faktura nr 1
+Klient: Jan
+Produkty:
+- chleb: 2 szt.
+

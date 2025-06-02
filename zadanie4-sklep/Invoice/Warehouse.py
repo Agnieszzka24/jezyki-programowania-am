@@ -27,4 +27,4 @@ class Warehouse(ABC):
     @property
     def products(self) -> dict:
         """Zwraca cały stan magazynu (tylko do odczytu)."""
-        return self.__products.copy()  # Zwracamy kopię, aby uniknąć modyfikacji z zewnątrz
+        return self.__products.copy()

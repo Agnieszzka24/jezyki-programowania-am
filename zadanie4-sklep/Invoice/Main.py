@@ -10,12 +10,13 @@ from Invoice.exceptions import OutOfStore
 from Invoice.Shop import Shop
 from Invoice.InvoiceRepository import InvoiceRepository
 
+# Inicjalizacja systemu
+warehouse = Warehouse()
+invoice_repo = InvoiceRepository()
+shop = Shop(invoice_repo, warehouse)
 
 def main():
-    # Inicjalizacja systemu
-    warehouse = Warehouse()
-    invoice_repo = InvoiceRepository()
-    shop = Shop(invoice_repo, warehouse)
+    global warehouse, invoice_repo, shop
 
     # Przykładowe produkty w magazynie
     warehouse.add_product("cukierki", 50, 2.99)
@@ -46,7 +47,7 @@ def main():
         elif choice == "2":
             # Sprzedaż (generowanie faktury)
             customer = input("Imię klienta: ")
-            items = []
+            items = []      # nazwa produktu, ilość
             while True:
                 print("\nDostępne produkty:")
                 for product, info in warehouse.products.items():

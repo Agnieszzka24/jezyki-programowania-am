@@ -11,7 +11,7 @@ class InvoiceRepository(ABC):
         return next((inv for inv in self.data_source if inv.number == number), None)
 
     def add(self, invoice):
-        """Dodaje fakturę do repozytorium, jeśli nie istnieje już faktura o tym numerze"""
+        """Dodaje fakturę do repozytorium, jeśli nie istnieje to dodaje do listy i zapisuje do pliku"""
         if not self.find_by_number(invoice.number):
             self.__data_source.append(invoice)
             self.save_to_file()
